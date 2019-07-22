@@ -1,5 +1,7 @@
-# For more Python information and examples, see
-# https://docs.semaphoreci.com/article/83-language-python
+# Find an example for your language and learn about the core features through
+# the guided tour:
+# https://docs.semaphoreci.com/category/58-programming-languages
+# https://docs.semaphoreci.com/category/56-guided-tour
 version: v1.0
 name: Hello Semaphore
 agent:
@@ -7,21 +9,15 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
-  - name: Streisand
+  - name: Simple example
     task:
+      env_vars:
+        - name: APP_ENV
+          value: prod
       jobs:
-        - name: Run some code
-          commands:
-            - python -c 'print("evol"[::-1])'
-            # Uncomment the following line to pull your code,
-            # then proceed by adding your custom commands:
-            - checkout
-              before_install:
-                - sudo apt-get update -qq
-                - sudo apt-get install python-pip python-dev ca-certificates shellcheck -qq
-              install:
-                - pip install ansible==2.6.5
-                - pip install urllib3 yamllint
-                - ansible --version
-              script:
-                - ./tests/tests.sh
+      - name: Download our code
+        commands:
+          - echo "Hello from Semaphore!"
+          - echo $APP_ENV
+          - checkout
+          - ls -alh
